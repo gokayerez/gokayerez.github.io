@@ -15,8 +15,6 @@ export default function Clock(props) {
             setOffset(apiTime.getTime() - localTime.getTime());
         })
         .catch(error => console.error(error));
-
-        console.log("API CALLED");
     }, []); 
 
     useEffect(() => {
