@@ -12,31 +12,26 @@ const useDropdownQuery = () => {
     })
 }
 
+const getTimeZones = async () => {
+    const response = await fetch("https://timeapi.io/api/timezone/availabletimezones");
+    return await response.json()
+}
+
 // cosmetics for the react-select component
 const selectStyles = {
     control: (provided) => ({...provided}),
     option: (provided) => ({...provided, color: 'grey'})
 }
 
-export default function Dropdown(props) {
+export default function Dropdown({ handleZoneSelect }) {
     const {data, isPending} = useDropdownQuery();
-
-    // sends selected timezone to parent
-    function handleSelect(selectedZone) {
-        props.parentCallback(selectedZone);
-    }
 
     return(
         <>
-            {/* <select onChange={e => handleSelect(e.target.value)}>
-                <option value={""} key={0}>Select a timezone.</option>
-                {isPending ? "" :
-                data.map(timeZone => (
-                    <option value={timeZone} key={timeZone}>{timeZone}</option>
-                ))}
-            </select> */}
             <Select options={data} 
-                onSelect={e => handleSelect(e.value)} 
+                onChange={e => {
+                    handleZoneSelect(e ? e.value : null)
+                }} 
                 isLoading={isPending} 
                 isClearable 
                 placeholder="Select a time zone..." 
@@ -44,9 +39,4 @@ export default function Dropdown(props) {
             />
         </> 
     );
-}
-
-const getTimeZones = async () => {
-    const response = await fetch("https://timeapi.io/api/timezone/availabletimezones");
-    return await response.json()
 }

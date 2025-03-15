@@ -38,27 +38,27 @@ export default function Clock(props) {
         return () => clearTimeout(timeout);
     }, [offset]);
 
-    if (!date) return <p>Loading...</p>
-
-/*     function formatTime() {
+    function formatTime() {
         let hours = date.getHours();
         let minutes = date.getMinutes();
         let seconds = date.getSeconds();
 
         return (`${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`);
-    } */
+    }
 
-/*     function padZero(time) {
+    function padZero(time) {
         if (time < 10) {
         return(`0${time}`);
         } else {
         return(time);
         }
-    } */
+    }
 
+    if (!date) return <p>Loading...</p>
+    // date.toLocaleString('el-GR', {timeStyle: "medium", hour12: false})
     return (
         <div>
-        <p>{props.timeZone} - {date.toLocaleString('el-GR', {timeStyle: "medium", hour12: false})}</p>
+            <p>{props.timeZone} - {formatTime()}</p>
         </div>
     )
 }

@@ -5,7 +5,7 @@ import Dropdown from "./Components/Dropdown/Dropdown";
 function App() {
   const [timeZone, setTimeZone] = useState("");
   const [clocks, setClocks] = useState([]);
-  const [id, setId] = useState(1);
+  const [id, setId] = useState(0);
   
   function handleTimeAdd() {
     if (timeZone !== "") {
@@ -18,16 +18,15 @@ function App() {
     }
   }
 
-  function handleCallback(childData) {
+  function handleZoneSelect(childData) {
     setTimeZone(childData)
   }
 
   return(
     <>
-      <Dropdown parentCallback = {handleCallback}/>
+      <Dropdown handleZoneSelect = {handleZoneSelect}/>
       <button onClick={handleTimeAdd}>Add time</button>
       <ul>
-        <li key={0}> <Clock timeZone="Turkey" /> </li>
         {clocks.map(clock => (
           <li onClick={() => setClocks(clocks.filter(c => c.id !== clock.id))} key={clock.id}> <Clock timeZone={clock.timeZone}/> </li>
         ))}
